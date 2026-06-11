@@ -1,5 +1,10 @@
 # 🛒 Análisis de Funnel y Retención: Caso MercadoLibre
 
+ <p align="center">
+  <img src="ecommerce_sql_portfolio_under25mb_optimized.gif" alt="Circular Double Linked List Animation" width="1280"/>
+</p>
+
+
 Este proyecto utiliza SQL avanzado para deconstruir el comportamiento del usuario en una plataforma de E-commerce. Se centra en la conversión del embudo de ventas y la retención de usuarios a lo largo del tiempo.
 
 ## 📄 Informe Ejecutivo (Metodología C-F-I)
