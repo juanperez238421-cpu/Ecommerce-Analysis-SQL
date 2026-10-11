@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+  <meta name="theme-color" content="#080d16"/>
+  <meta name="description" content="NEXUS SQL Protocol — Simulador de automatización con SQLite real."/>
+  <link rel="manifest" href="./manifest.webmanifest"/>
+  <link rel="icon" href="./icon.svg" type="image/svg+xml"/>
+  <link rel="stylesheet" href="./style.css"/>
+  <title>NEXUS // SQL PROTOCOL</title>
+</head>
+<body>
+ <div class="app-shell">
+  <header class="topbar">
+    <div class="brand-lockup">
+      <div class="brand-logo"><span class="logo-shape">◇</span><span class="logo-dot"></span></div>
+      <div><div class="brand-eyebrow">AUTONOMOUS SYSTEMS // ANDROID 0.4</div><div class="brand-name">NEXUS<span class="brand-slash">/</span><span class="brand-sub">SQL PROTOCOL</span></div></div>
+    </div>
+    <div class="header-status"><span class="pulse-dot"></span><span>SIMULATION <b>ONLINE</b></span></div>
+    <div class="header-right"><span>SECTOR <b>07-A</b></span><span class="divider-v"></span><span>SYS <b>STABLE</b></span><span class="divider-v"></span><button class="icon-button" id="sound-toggle" type="button" title="Activar o silenciar efectos" aria-label="Activar o silenciar efectos">♫</button></div>
+  </header>
+
+  <section class="intro-strip">
+    <div class="intro-copy"><div class="kicker"><span class="eyebrow-line"></span> COMMAND YOUR WORLD WITH DATA</div><h1>La colonia no se controla. <em>Se consulta.</em></h1><p>Diseña consultas SQL, envía órdenes a los drones y observa cómo cobra vida una red autónoma.</p></div>
+    <div class="mission-pill"><div class="mission-ico">⌁</div><div><small>MISIÓN EN CURSO</small><strong id="mission-text">ACTIVAR LA RED DE EXTRACCIÓN</strong><span id="mission-progress">0 / 8 unidades entregadas</span></div><div class="mini-progress"><div id="progress-fill"></div></div></div>
+  </section>
+
+  <section class="metrics">
+    <div class="metric"><div class="metric-top">SALDO DE CRÉDITOS <span>◈</span></div><div class="metric-number" id="metric-credits">240 <small>CR</small></div><div class="metric-foot"><span class="metric-trend">↗</span> Producidos por entregas</div></div>
+    <div class="metric"><div class="metric-top">MINERAL PROCESADO <span>▣</span></div><div class="metric-number" id="metric-delivered">00 <small>UNIDADES</small></div><div class="metric-foot">Cristal y aleación</div></div>
+    <div class="metric"><div class="metric-top">ROBOTS ACTIVOS <span>⬡</span></div><div class="metric-number" id="metric-robots">02 <small>/ 02</small></div><div class="metric-foot"><span class="indicator-green"></span> Red conectada</div></div>
+    <div class="metric"><div class="metric-top">CICLOS EJECUTADOS <span>⟳</span></div><div class="metric-number" id="metric-ticks">000 <small>TICKS</small></div><div class="metric-foot">SQLite · motor local</div></div>
+  </section>
+
+  <main class="layout-grid">
+   <section class="simulation-card panel">
+    <div class="panel-head"><div class="panel-title-group"><span class="head-icon">◎</span><div><h2>LIVE SIMULATION</h2><p>VISTA TÁCTICA / OPERACIÓN ACTIVA</p></div></div><div class="head-tools"><div class="environment-picker"><span>ENTORNO</span><button id="environment-btn" class="select-button" title="Cambiar entorno" type="button"><span id="environment-label">AURORA-7</span><span>⌄</span></button></div><button class="small-icon" id="grid-toggle" type="button" title="Mostrar u ocultar cuadrícula">▦</button></div></div>
+    <div class="map-frame" id="map-frame"><canvas id="world" aria-label="Escenario animado de colonia y drones" role="img"></canvas><div class="map-vignette"></div><div class="map-overlay overlay-top"><span class="live-badge"><span></span> LIVE FEED</span><span class="map-coordinate" id="camera-coord">GRID 28 × 18</span></div><div class="map-overlay overlay-bottom"><div class="zoom-controls"><button type="button" id="zoom-out" aria-label="Alejar">−</button><span id="zoom-label">100%</span><button type="button" id="zoom-in" aria-label="Acercar">+</button></div><div class="map-tip">TOCA UN NODO PARA INSPECCIONAR</div><div class="view-mode">◉ TACTICAL VIEW</div></div><div class="object-popup" id="object-popup" hidden></div></div>
+    <div class="world-controls"><div class="playback"><button class="play-button" type="button" id="play"><span id="play-icon">▶</span><span id="play-label">EJECUTAR</span></button><button class="control-button" type="button" id="step" title="Ejecutar un tick">⏭ <span>PASO</span></button><button class="control-button subtle" id="reset" type="button" title="Reiniciar datos de la partida">↺ <span>REINICIAR</span></button></div><div class="speed-controls"><span>VELOCIDAD</span><button class="speed active" type="button" data-speed="1">1×</button><button class="speed" type="button" data-speed="2">2×</button><button class="speed" type="button" data-speed="4">4×</button></div></div>
+    <div class="sim-footer"><div class="robot-summary"><span class="tiny-label">DRONES CONECTADOS</span><div id="robot-list" class="robot-list"></div></div><div class="legend"><span><i class="legend-dot cyan"></i> CRYSTAL</span><span><i class="legend-dot amber"></i> ALLOY</span><span><i class="legend-dot purple"></i> ROBOT</span></div></div>
+   </section>
+
+   <section class="terminal panel">
+    <div class="panel-head"><div class="panel-title-group"><span class="head-icon">⌘</span><div><h2>SQL COMMAND CENTER</h2><p>EDITOR DE PROTOCOLOS / SQLITE</p></div></div><div class="terminal-badge">SQL <strong>READY</strong></div></div>
+    <div class="editor-toolbar"><span class="editor-file"><span class="file-icon">▥</span> protocol_01.sql <span class="file-status">●</span></span><button class="key-button" type="button" id="help-btn">? <span>GUÍA SQL</span></button></div>
+    <div class="editor-wrap"><pre class="line-numbers" id="line-numbers" aria-hidden="true">01</pre><textarea id="editor" aria-label="Editor SQL" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"></textarea></div>
+    <div class="presets"><span class="tiny-label">PROTOCOLOS</span><button type="button" class="preset active" data-preset="auto">⚡ AUTOMÁTICO</button><button type="button" class="preset" data-preset="mine">◇ MINERÍA</button><button type="button" class="preset" data-preset="analysis">▤ ANÁLISIS</button></div>
+    <div class="execution-bar"><div class="sql-hint"><span class="hint-icon">ⓘ</span><span id="status-text">Motor disponible. Ejecuta tu primer protocolo.</span></div><button class="query-btn" id="query-btn" type="button">EJECUTAR SQL <span>↗</span></button></div>
+    <div class="results-head"><h3>RESULTADOS <span id="row-counter">0 ROWS</span></h3><span class="query-time" id="query-time">SQLITE 3</span></div>
+    <div id="query-results" class="result-panel"><div class="results-empty"><span>⟐</span><p>Las filas devueltas por tu SQL aparecerán aquí.</p><small>Consulta tablas y automatiza la colonia.</small></div></div>
+    <div class="terminal-bottom"><div class="log-title"><span>▤</span> EVENT STREAM <small>EN VIVO</small></div><div class="event-stream" id="event-stream"><span class="log-line">Esperando telemetría…</span></div></div>
+   </section>
+  </main>
+  <footer class="footer"><span>◈ NEXUS SYSTEMS <span class="fade">/ AUTONOMOUS FRONTIER</span></span><span>BUILT ON REAL SQLITE <span class="footer-highlight">● PROTOTYPE v0.3</span></span></footer>
+ </div>
+ <dialog id="help-dialog" class="help-dialog"><div class="modal-head"><div><small>DOCUMENTACIÓN INTERACTIVA</small><h2>Programa tu colonia con SQL</h2></div><button type="button" id="help-close" aria-label="Cerrar">✕</button></div><p>El motor expone tablas reales de SQLite. Una consulta de control devuelve <code>robot_id</code>, <code>action</code>, <code>x</code> e <code>y</code>. El simulador interpreta esas filas y mueve los robots; SQL nunca modifica directamente la base de datos.</p><div class="help-table"><div><b>robots</b><span>id, name, x, y, energy, cargo, status</span></div><div><b>resource_nodes</b><span>x, y, resource, stock, richness</span></div><div><b>facilities</b><span>code, type, x, y, integrity</span></div><div><b>jobs</b><span>robot_id, action, x, y, priority, distance</span></div><div><b>inventory</b><span>item, quantity</span></div></div><h3>Órdenes disponibles</h3><p><code>MINE</code> extraer · <code>DELIVER</code> entregar · <code>CHARGE</code> recargar. Cambia el SQL y observa cómo cambia el comportamiento.</p><button type="button" id="help-got-it" class="query-btn">ENTENDIDO ↗</button></dialog>
+ <script defer src="./game.js"></script>
+</body>
+</html>

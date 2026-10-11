@@ -1,0 +1,40 @@
+name: NEXUS SQL Protocol Android APK
+on:
+  push:
+    branches:
+      - 'nexus-sql-android-build'
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Android SDK
+        uses: android-actions/setup-android@v3
+      - name: Gradle 8.11.1
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.11.1'
+      - name: Assemble real APK
+        run: gradle --no-daemon :app:assembleDebug
+        working-directory: nexus-sql-android
+      - name: Verify APK files and manifest
+        run: |
+          test -s nexus-sql-android/app/build/outputs/apk/debug/app-debug.apk
+          unzip -t nexus-sql-android/app/build/outputs/apk/debug/app-debug.apk | tail -1
+          $ANDROID_HOME/build-tools/35.0.0/aapt dump badging nexus-sql-android/app/build/outputs/apk/debug/app-debug.apk | head -15
+      - name: Distribute signed debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: NEXUS_SQL_PROTOCOL_v0.4_ANDROID_APK
+          path: nexus-sql-android/app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 90
+          if-no-files-found: error
